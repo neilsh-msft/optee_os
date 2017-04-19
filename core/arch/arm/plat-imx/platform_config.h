@@ -110,11 +110,12 @@
 #define CSU_ACCESS_ALL			0x00FF00FF
 #define CSU_SETTING_LOCK		0x01000100
 
-/* For i.MX6 Quad SABRE Lite and Smart Device board */
+/* For i.MX6 Quad SABRE SD/Lite, Hummingboard-Edge, Smart Device boards */
 
-#elif defined(PLATFORM_FLAVOR_mx6qsabrelite) || \
-	defined(PLATFORM_FLAVOR_mx6qsabresd) || \
-	defined(PLATFORM_FLAVOR_mx6dlsabresd)
+#elif defined(PLATFORM_FLAVOR_mx6qsabrelite)  || \
+        defined(PLATFORM_FLAVOR_mx6qsabresd)  || \
+        defined(PLATFORM_FLAVOR_mx6dlsabresd) || \
+        defined(PLATFORM_FLAVOR_mx6qhmbedge)
 
 #define SCU_BASE			0x00A00000
 #define PL310_BASE			0x00A02000
@@ -131,7 +132,8 @@
 #define GIC_DIST_BASE			(GIC_BASE + GICD_OFFSET)
 
 #if defined(PLATFORM_FLAVOR_mx6qsabrelite) || \
-	defined(PLATFORM_FLAVOR_mx6qsabresd)
+      defined(PLATFORM_FLAVOR_mx6qsabresd) || \
+      defined(PLATFORM_FLAVOR_mx6qhmbedge)
 #define UART1_BASE			0x02020000
 #define UART2_BASE			0x021E8000
 #else
@@ -152,7 +154,8 @@
 #if defined(PLATFORM_FLAVOR_mx6qsabrelite)
 #define CONSOLE_UART_BASE		UART2_BASE
 #endif
-#if defined(PLATFORM_FLAVOR_mx6qsabresd)
+#if defined(PLATFORM_FLAVOR_mx6qsabresd) || \
+    defined(PLATFORM_FLAVOR_mx6qhmbedge)
 #define CONSOLE_UART_BASE		UART1_BASE
 #endif
 #if defined(PLATFORM_FLAVOR_mx6dlsabresd)
@@ -164,8 +167,12 @@
 #define CFG_TEE_RAM_VA_SIZE		(1024 * 1024)
 
 #if defined(PLATFORM_FLAVOR_mx6qsabrelite) || \
-	defined(PLATFORM_FLAVOR_mx6qsabresd)
-#define CFG_TEE_CORE_NB_CORE		4
+      defined(PLATFORM_FLAVOR_mx6qsabresd) || \
+      defined(PLATFORM_FLAVOR_mx6qhmbedge)
+//
+//  For initial bring-up we temporarily disable secondary cores
+//
+#define CFG_TEE_CORE_NB_CORE		1 //4
 #else
 #define CFG_TEE_CORE_NB_CORE		2
 #endif
@@ -218,7 +225,8 @@
  */
 #ifndef PL310_AUX_CTRL_INIT
 #if defined(PLATFORM_FLAVOR_mx6qsabrelite) || \
-	defined(PLATFORM_FLAVOR_mx6qsabresd)
+      defined(PLATFORM_FLAVOR_mx6qsabresd) || \
+      defined(PLATFORM_FLAVOR_mx6qhmbedge)
 #define PL310_AUX_CTRL_INIT		0x3C470800
 #else
 #define PL310_AUX_CTRL_INIT		0x3C440800
@@ -289,15 +297,14 @@
  */
 
 /* emulated SRAM, at start of secure DDR */
-
-#define CFG_CORE_TZSRAM_EMUL_START	0x4E000000
+#define CFG_CORE_TZSRAM_EMUL_START	0x10900000
+#define CFG_DDR_TEETZ_RESERVED_START	0x10A00000
 
 #define TZSRAM_BASE			CFG_CORE_TZSRAM_EMUL_START
 #define TZSRAM_SIZE			CFG_CORE_TZSRAM_EMUL_SIZE
 
 /* Location of trusted dram */
 
-#define CFG_DDR_TEETZ_RESERVED_START	0x4E100000
 #define CFG_DDR_TEETZ_RESERVED_SIZE	0x01F00000
 
 #define CFG_PUB_RAM_SIZE		(1 * 1024 * 1024)
@@ -339,7 +346,7 @@
  *  TA_RAM  : all what is left
  */
 
-#define CFG_DDR_TEETZ_RESERVED_START	0x4E000000
+#define CFG_DDR_TEETZ_RESERVED_START	0x10900000
 #define CFG_DDR_TEETZ_RESERVED_SIZE	0x02000000
 
 #define CFG_PUB_RAM_SIZE		(1 * 1024 * 1024)
@@ -407,7 +414,8 @@
  * Full Line Zero (FLZ) disabled (bit0=0)
  */
 #if defined(PLATFORM_FLAVOR_mx6qsabrelite) || \
-	defined(PLATFORM_FLAVOR_mx6qsabresd)
+      defined(PLATFORM_FLAVOR_mx6qsabresd) || \
+      defined(PLATFORM_FLAVOR_mx6qhmbedge)
 #define PL310_AUX_CTRL_INIT		0x3C470800
 #else
 #define PL310_AUX_CTRL_INIT		0x3C440800
