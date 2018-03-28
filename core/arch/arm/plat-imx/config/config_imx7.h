@@ -41,11 +41,12 @@
 
 /* Location of trusted dram */
 #define TZDRAM_BASE		DRAM0_BASE
-#define TZDRAM_SIZE		(30 * 1024 * 1024)
+#define TZDRAM_SIZE		(40 * 1024 * 1024)
 
 /* Full GlobalPlatform test suite requires CFG_SHMEM_SIZE to be at least 2MB */
+/* HMI demo requires 8MB */
 #define CFG_SHMEM_START		(TZDRAM_BASE + TZDRAM_SIZE)
-#define CFG_SHMEM_SIZE		0x200000
+#define CFG_SHMEM_SIZE		0x800000
 
 #define CFG_TEE_RAM_VA_SIZE	(1024 * 1024)
 
